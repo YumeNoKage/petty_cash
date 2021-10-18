@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+
+/* @font-face {
+    font-family: 'Roboto Regular';
+    src: local('Roboto'), url(../fonts/RobotoMono-Regular.ttf) format('ttf');
+}
+@font-face {
+    font-family: 'Roboto Medium';
+    src: local('Roboto'), url(../fonts/RobotoMono-Medium.ttf) format('ttf');
+}
+@font-face {
+    font-family: 'Roboto Bold';
+    src: local('Roboto'), url(../fonts/RobotoMono-Bold.ttf) format('ttf');
+}
+@font-face {
+    font-family: 'Abeezee';
+    src: local('Roboto'), url(../fonts/ABeeZee-Regular.ttf) format('ttf');
+} */
+
+
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee&family=Roboto+Mono:wght@100;300;400;500;700&display=swap')
