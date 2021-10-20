@@ -16,11 +16,11 @@
                         <p class="lg:text-xl text-lg mb-0">
                             Your Cash
                         </p>
-                        <p class="mb-0 sm:text-xs ml-auto">
+                        <p class="mb-0 text-xs ml-auto">
                             16 oct 2021
                         </p>
                     </div>
-                    <div class="cash lg:text-5xl md:text-3xl text-2xl font-roboto-mono items-end flex">
+                    <div class="cash lg:text-5xl md:text-4xl text-2xl font-roboto-mono items-end flex">
                         <span class="font-medium mr-1">Rp</span> 
                         <span class="tracking-tightest font-medium">1.500.000</span>
                     </div>
@@ -34,13 +34,13 @@
                 <div class="p-2 w-full justify-between flex flex-col">
                     <div class="flex text-grey">
                         <p class="text-xs mb-0">
-                            Last Expenses
+                            Last {{ item == 1 ? "Expenses" : "Income"}}
                         </p>
                         <p class="mb-0 text-xs ml-auto">
                             16 oct 2021
                         </p>
                     </div>
-                    <div class="cash text-lg font-roboto-mono">
+                    <div class="cash sm:text-lg md:text-xl lg:text-xl font-roboto-mono">
                         <span class="font-medium mr-1">Rp</span> 
                         <span class="tracking-tightest">1.500.000</span>
                     </div>
@@ -56,17 +56,23 @@
             </div>
         </div>
     </div>
+
+    <!-- LIST HISTORY -->
+    <div class="mt-100">
+        <History/>
+    </div>
     <!-- <Modal title="Add Expenses" colors="red"/> -->
 </template>
 
 <script>
-// @ is an alias to /src
 import Modal from '@/components/Modal.vue'
+import History from '@/components/History.vue'
 
 export default {
 	name: "Home",
 	  components: {
-	    Modal
+	    Modal,
+        History,
 	  }
 };
 </script>
