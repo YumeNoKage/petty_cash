@@ -1,5 +1,5 @@
 <template>
-    <button :class="`modal-open bg-${colors} text-white hover:bg-${colors}-800 duration-200 ease-out font-bold py-1 px-3 rounded`" @click="toggleModal()">{{ title }}</button>
+    <button :class="`modal-open bg-${colors} text-white hover:bg-${colors}-800 duration-200 ease-out font-bold rounded ${ !btn_show ? 'invisible' : 'py-1 px-3'}`" @click="toggleModal()" id="btn-modal">{{ btn_show ? btn_name : '' }}</button>
 	<div class="fixed z-10 inset-0 ease-out duration-200 overflow-y-auto opacity-0 pointer-events-none" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modal">
 		<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" >
             <div class="fixed inset-0 bg-modal ease-out duration-200 transition-opacity" aria-hidden="true"></div>
@@ -51,16 +51,12 @@
 
 <script>
 export default {
-    props:{
-        title:{
-            type: String,
-            default: 'Modal'
-        },
-        colors:{
-            type: String,
-            default: 'blue'
-        }
-    },
+    props:[
+        'title',
+        'colors',
+        'btn_show',
+        'btn_name',
+    ],
 
     methods: {
         toggleModal () {
@@ -69,8 +65,6 @@ export default {
             modal.classList.toggle('opacity-0')
             modal.classList.toggle('pointer-events-none')
             // body.classList.toggle('modal-active')
-
-            console.log('click');
         }
     }
 }

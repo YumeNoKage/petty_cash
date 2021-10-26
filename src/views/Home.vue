@@ -70,9 +70,9 @@ import History from '@/components/History.vue'
 
 export default {
 	name: "Home",
-	  components: {
-	    Modal,
+    components: {
+        Modal,
         History,
-	  }
+    }
 };
 </script>
