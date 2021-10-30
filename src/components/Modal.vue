@@ -20,19 +20,19 @@
                     <div class="mb-3">
                         <div class="block">
                             <label for="title" class="block text-white mb-1">Title</label>
-                            <input id="title" type="text" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Title">
+                            <input id="title" v-model="data.title" type="text" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Title">
                         </div>
                     </div>
                     <div class="mb-3">
                         <div class="block">
                             <label for="nominal" class="block text-white mb-1">Nominal</label>
-                            <input id="nominal" type="number" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Nominal">
+                            <input id="nominal" v-model="data.nominal" type="number" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Nominal">
                         </div>
                     </div>
                     <div class="mb-5">
                         <div class="block">
                             <label for="desc" class="block text-white mb-1">Description</label>
-                            <textarea id="desc" type="text" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Some Description"></textarea>
+                            <textarea id="desc" type="text" v-model="data.description" class="block bg-white_transparent rounded w-full py-2 px-3 font-2xl text-white" placeholder="Some Description"></textarea>
                         </div>
                     </div>
                     <div class="sm:flex sm:flex-row-reverse">
@@ -51,12 +51,48 @@
 
 <script>
 export default {
-    props:[
-        'title',
-        'colors',
-        'btn_show',
-        'btn_name',
-    ],
+    props:{
+        title:{
+            type: String,
+            default: '',
+        },
+        colors:{
+            type: String,
+            default: '',
+        },
+        btn_name:{
+            type: String,
+            default: '',
+        },
+        btn_show:{
+            type: Boolean,
+            default: true,
+        },
+        data_item:{
+            type: Object,
+            default: null,
+        },
+    },
+
+    data(){
+        return {
+            data:{
+                title: '',
+                nominal: null,
+                description: '',
+                status: '',
+            }
+        }
+    },
+
+    watch:{
+        data_item: function(newValue, oldValue){
+            this.data.title = newValue.title;
+            this.data.nominal = newValue.nominal;
+            this.data.description = newValue.description;
+            this.data.status = newValue.status;
+        }
+    },
 
     methods: {
         toggleModal () {
