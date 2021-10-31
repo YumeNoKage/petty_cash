@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <Modal :title="data_modal.modal_name" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data"></Modal>
+        <Modal :title="data_modal.modal_name" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data" id_btn="edit_btn"></Modal>
     </div>
 </template>
 
@@ -103,7 +103,7 @@ export default {
             this.data_modal.data = item
             this.data_modal.color = item.status == 'expend' ? 'red' : 'blue' 
 
-            document.getElementById('btn-modal').click()
+            document.getElementById('btn_modal').click()
         }
     }
 }

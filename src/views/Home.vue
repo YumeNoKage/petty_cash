@@ -36,11 +36,11 @@
                             Last {{ item == 1 ? "Expenses" : "Income"}}
                         </p>
                         <p class="mb-0 text-xs ml-auto">
-                            {{ helperFormatDate(total.last_update, 'dd mmm yyyy') }}
+                            {{ helperFormatDate(item == 1 ? total.expend_update_at : total.income_update_at, 'dd mmm yyyy') }}
                         </p>
                     </div>
                     <div class="cash sm:text-lg md:text-xl lg:text-xl font-roboto-mono">
-                        <span class="tracking-tightest">{{ helperToRupiah(item == 1 ? total.last_income : total.last_expend) }}</span>
+                        <span class="tracking-tightest">{{ helperToRupiah(item == 1 ? total.last_expend : total.last_income ) }}</span>
                     </div>
                 </div>
                 <div :class="`icon-wallet bg-${item == 1 ? 'red' : 'blue' } rounded-r w-28 relative`">
@@ -56,10 +56,20 @@
     </div>
 
     <!-- LIST HISTORY -->
-    <div class="mt-100">
+    <div class=" mt-20">
+        <div class="flex mb-10">
+            <h1 class="sm:text-xl md:text-2xl lg:text-3xl text-grey">History</h1>
+            <div class="ml-auto flex">
+                <div class="lg:mr-10 mb:mr-10 sm:mr-5">
+                    <Modal :title="'Add Income'" :btn_name="'Add Income'" :colors="'blue'" id_btn="add_income"/>
+                </div>
+                <div>
+                    <Modal :title="'Add Expend'" :btn_name="'Add Expend'" :colors="'red'" id_btn="add_expend"/>
+                </div>
+            </div>
+        </div>
         <History :datas="data"/>
     </div>
-    <!-- <Modal title="Add Expenses" colors="red"/> -->
 </template>
 
 <script>
