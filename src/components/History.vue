@@ -60,7 +60,7 @@
                         <span class='tooltip rounded-small shadow-md p-1 bg-grey text-white -mt-8'>{{ item.status }}</span>
                         <div class="px-2 sm:px-1 absolute top-2/4 transform -translate-y-2/4 w-full">
                             <div class="sm:w-full ">
-                                <img v-if="item.status == expend"  src="@/assets/icons/expenses.svg" class="lg:w-12 md:w-10 mx-auto" alt="Expenses">
+                                <img v-if="item.status == 'expend'"  src="@/assets/icons/expenses.svg" class="lg:w-12 md:w-10 mx-auto" alt="Expenses">
                                 <img v-else src="@/assets/icons/income.svg" class="lg:w-12 md:w-10 mx-auto" alt="Income">
                             </div>
                         </div>
@@ -68,12 +68,13 @@
                 </div>
             </div>
         </div>
-        <Modal :title="data_modal.modal_name" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data" id_btn="edit_btn"></Modal>
+        <ModalEdit :title="data_modal.modal_name" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data"></ModalEdit>
     </div>
 </template>
 
 <script>
 import Modal from "./Modal"
+import ModalEdit from "./ModalEdit"
 
 export default {
     props:{
@@ -84,7 +85,8 @@ export default {
     },
 
     components:{
-        Modal
+        Modal,
+        ModalEdit,
     },
 
     data(){
@@ -103,7 +105,7 @@ export default {
             this.data_modal.data = item
             this.data_modal.color = item.status == 'expend' ? 'red' : 'blue' 
 
-            document.getElementById('btn_modal').click()
+            document.getElementById('edit_btn_modal').click()
         }
     }
 }
