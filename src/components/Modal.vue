@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="sm:flex sm:flex-row-reverse">
-                        <button type="button" :class="`w-full inline-flex justify-center rounded border border-transparent ease-out duration-200 px-3 py-1 bg-${colors} text-current text-base font-medium text-white hover:bg-${colors}-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`">
+                        <button @click="addCashData()" type="button" :class="`w-full inline-flex justify-center rounded border border-transparent ease-out duration-200 px-3 py-1 bg-${colors} text-current text-base font-medium text-white hover:bg-${colors}-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`">
                             {{ title }}
                         </button>
                         <button @click="toggleModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded ease-out duration-200 text-white_transparent-light bg-white_transparent transiti shadow-sm px-3 py-1 text-base font-medium hover:bg-white_transparent-dark hover:text-gray-500 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     props:{
         title:{
@@ -76,6 +78,14 @@ export default {
             type: Object,
             default: null,
         },
+        statusCash:{
+            type: String,
+            default: null,
+        },
+        idTotal:{
+            type: Number,
+            default: null,
+        },
     },
 
     data(){
@@ -84,7 +94,7 @@ export default {
                 title: '',
                 nominal: null,
                 description: '',
-                status: '',
+                status: null,
             }
         }
     },
@@ -93,15 +103,35 @@ export default {
         idBtn(){
             console.log(this.idBtn)
         },
-        data_item: function(newValue, oldValue){
+        data_item(newValue, oldValue){
             this.data.title = newValue.title;
             this.data.nominal = newValue.nominal;
             this.data.description = newValue.description;
-            this.data.status = newValue.status;
         },
     },
 
+    created() {
+        this.data.status = this.statusCash
+    },
+
     methods: {
+        ...mapActions({
+            addCash: 'addCash'
+        }),
+
+        addCashData : async function(){
+            let item = { ...this.data, total_id: this.idTotal }
+            
+            try {
+                const response = await this.addCash(item)
+                if(response.status){
+                    this.toggleModal()
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
         toggleModal () {
             // const body = document.querySelector('body')
             const modal = document.getElementById(`${this.idBtn}`)

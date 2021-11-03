@@ -56,15 +56,15 @@
     </div>
 
     <!-- LIST HISTORY -->
-    <div class=" mt-20">
+    <div class=" mt-20" >
         <div class="flex mb-10">
             <h1 class="sm:text-xl md:text-2xl lg:text-3xl text-grey">History</h1>
             <div class="ml-auto flex">
                 <div class="lg:mr-10 mb:mr-10 sm:mr-5">
-                    <Modal :title="'Add Income'" :btn_name="'Add Income'" :colors="'blue'" idBtn="add_income"/>
+                    <Modal :title="'Add Income'" :idTotal="total ? total.id : null" :btn_name="'Add Income'" :colors="'blue'" idBtn="add_income" statusCash="income"/>
                 </div>
                 <div>
-                    <Modal :title="'Add Expend'" :btn_name="'Add Expend'" :colors="'red'" idBtn="add_expend"/>
+                    <Modal :title="'Add Expend'" :idTotal="total ? total.id : null" :btn_name="'Add Expend'" :colors="'red'" idBtn="add_expend" statusCash="expend"/>
                 </div>
             </div>
         </div>
