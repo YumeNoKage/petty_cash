@@ -61,14 +61,24 @@
             <h1 class="sm:text-xl md:text-2xl lg:text-3xl text-grey">History</h1>
             <div class="ml-auto flex">
                 <div class="lg:mr-10 mb:mr-10 sm:mr-5">
-                    <Modal :title="'Add Income'" :idTotal="total ? total.id : null" :btn_name="'Add Income'" :colors="'blue'" idBtn="add_income" statusCash="income"/>
+                    <Modal :title="'Add Income'" :idTotal="total ? total.id : null" :btn_name="'Add Income'" :colors="'blue'" idBtn="add_income" statusCash="income" @update:ParentData="toGetList(), toGetTotal()"/>
                 </div>
                 <div>
-                    <Modal :title="'Add Expend'" :idTotal="total ? total.id : null" :btn_name="'Add Expend'" :colors="'red'" idBtn="add_expend" statusCash="expend"/>
+                    <Modal :title="'Add Expend'" :idTotal="total ? total.id : null" :btn_name="'Add Expend'" :colors="'red'" idBtn="add_expend" statusCash="expend" @update:ParentData="toGetList(), toGetTotal()"/>
                 </div>
             </div>
         </div>
-        <History :datas="data"/>
+        <History :datas="data" @update:ParentData="toGetList(), toGetTotal()"/>
+
+        <!-- pagination -->
+        <div v-if="data">
+            <div class="flex justify-center" v-if="data.pagination.totalPage > 1">
+                <div class="text-white p-1 rounded-md mx-1 cursor-pointer bg-red" @click="page = data.pagination.prevPage, toGetList(), toGetTotal()" v-if="data.pagination.prevPage">&laquo;</div>
+                <div class="text-white p-1 rounded-md mx-1 bg-yellow">{{data.pagination.currentPage}}</div>
+                <div class="text-white p-1 rounded-md mx-1 cursor-pointer bg-blue" @click="page = data.pagination.nextPage, toGetList(), toGetTotal()" v-if="data.pagination.nextPage">&raquo;</div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -87,6 +97,7 @@ export default {
         return {
             total: null,
             data: null,
+            page: 1,
         }
     },
 
@@ -98,7 +109,7 @@ export default {
         async toGetList(){
             let data = {
                 params: null,
-                point: 'list-cash?limit=5&page=1'
+                point: `list-cash?limit=5&page=${this.page}`
             }
             try {
                 const response = await this.listCash(data);
@@ -116,6 +127,8 @@ export default {
             try {
                 const response = await this.listCash(data);
                 this.total = response.data;
+
+                localStorage.id_total = response.data.id
             } catch (error) {
                 console.log(error);
             }

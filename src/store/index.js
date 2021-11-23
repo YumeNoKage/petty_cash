@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 
 import { 
     getData as getListCashService ,
-    addData as addDataCashService 
+    addData as addDataCashService,
+    editData as editDataCashService 
 } from '../services/cash'
 
 export default createStore({

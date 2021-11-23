@@ -43,7 +43,7 @@
                                 Description
                             </p>
                         </div>
-                        <div class="title sm:text-lg md:text-lg lg:text-xl text-white">
+                        <div class="title sm:text-lg md:text-lg lg:text-xl text-white" style="white-space: pre-line">
                             {{ item.description }}
                         </div>
                     </div>
@@ -68,7 +68,9 @@
                 </div>
             </div>
         </div>
-        <ModalEdit :title="data_modal.modal_name" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data"></ModalEdit>
+
+        <!-- for modal -->
+        <ModalEdit :title="data_modal.modal_name" idBtn="edit_cash" :colors="data_modal.color" :btn_show="false" :data_item="data_modal.data" @update:ParentData="updateParent()"></ModalEdit>
     </div>
 </template>
 
@@ -99,14 +101,23 @@ export default {
         }
     },
 
+    emits:['update:ParentData'],
+
     methods:{
         openModal(item) {
             this.data_modal.modal_name = item.status == 'expend' ? 'Edit Expend' : 'Edit Income'
             this.data_modal.data = item
             this.data_modal.color = item.status == 'expend' ? 'red' : 'blue' 
 
+            // if(document.getElementById(`edit_${item.status}_${item.id}`)){
             document.getElementById('edit_btn_modal').click()
+            // }
+            // console.log(document.getElementById('edit_cash'));
+        },
+        updateParent(){
+            this.$emit('update:ParentData')
         }
+
     }
 }
 </script>

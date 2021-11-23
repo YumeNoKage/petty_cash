@@ -5,7 +5,7 @@ const accept = 'application/json'
 export const getData = async data => {
     const url = 'http://localhost:4000/' + data.point
     try {
-        const response = await axios.get(url, data, {
+        const response = await axios.get(url, data.params, {
             headers: {
                 'Content-Type': accept
             }
@@ -34,9 +34,9 @@ export const addData = async data => {
 export const editData = async data => {
     const url = 'http://localhost:4000/update/' + data.point
     try {
-        const response = await axios.put(url, data, {
+        const response = await axios.put(url, data.params, {
             headers: {
-                'Content-Type': accept
+                'Content-Type': accept,
             }
         })
 

@@ -1,6 +1,6 @@
 <template>
     <button :class="`modal-open bg-${colors} text-white hover:bg-${colors}-800 duration-200 ease-out font-bold rounded ${ !btn_show ? 'invisible' : 'py-1 px-3'}`" @click="toggleModal()" id="edit_btn_modal">{{ btn_show ? btn_name : '' }} </button>
-	<div class="fixed z-10 inset-0 ease-out duration-200 overflow-y-auto opacity-0 pointer-events-none" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="edit_modal">
+	<div class="fixed z-10 inset-0 ease-out duration-200 overflow-y-auto opacity-0 pointer-events-none" aria-labelledby="modal-title" role="dialog" aria-modal="true" :id="idBtn">
 		<div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" >
             <div class="fixed inset-0 bg-modal ease-out duration-200 transition-opacity" aria-hidden="true"></div>
 
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="sm:flex sm:flex-row-reverse">
-                        <button type="button" :class="`w-full inline-flex justify-center rounded border border-transparent ease-out duration-200 px-3 py-1 bg-${colors} text-current text-base font-medium text-white hover:bg-${colors}-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`">
+                        <button @click="updateCashData()" type="button" :class="`w-full inline-flex justify-center rounded border border-transparent ease-out duration-200 px-3 py-1 bg-${colors} text-current text-base font-medium text-white hover:bg-${colors}-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm`">
                             {{ title }}
                         </button>
                         <button @click="toggleModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded ease-out duration-200 text-white_transparent-light bg-white_transparent transiti shadow-sm px-3 py-1 text-base font-medium hover:bg-white_transparent-dark hover:text-gray-500 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     props:{
         title:{
@@ -64,6 +66,10 @@ export default {
             type: String,
             default: '',
         },
+        idBtn:{
+            type: String,
+            default: 'btn_modal',
+        },
         btn_show:{
             type: Boolean,
             default: true,
@@ -72,7 +78,17 @@ export default {
             type: Object,
             default: null,
         },
+        statusCash:{
+            type: String,
+            default: null,
+        },
+        idTotal:{
+            type: Number,
+            default: null,
+        },
     },
+
+    emits:['update:ParentData'],
 
     data(){
         return {
@@ -95,12 +111,32 @@ export default {
     },
 
     methods: {
+        ...mapActions({
+            editCash: 'editCash'
+        }),
         toggleModal () {
             // const body = document.querySelector('body')
-            const modal = document.getElementById('edit_modal')
+            const modal = document.getElementById(`${this.idBtn}`)
             modal.classList.toggle('opacity-0')
             modal.classList.toggle('pointer-events-none')
             // body.classList.toggle('modal-active')
+        },
+
+        updateCashData: async function(){
+            let idTotal = parseInt(localStorage.id_total)
+            let item = {
+                params: { ...this.data, total_id: idTotal },
+                point: this.data_item.id
+            }
+            try {
+                const response = await this.editCash(item)
+                if(response.status){
+                    this.toggleModal()
+                    this.$emit('update:ParentData')
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }

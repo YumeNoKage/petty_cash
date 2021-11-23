@@ -88,6 +88,8 @@ export default {
         },
     },
 
+    emits:['update:ParentData'],
+
     data(){
         return {
             data:{
@@ -100,9 +102,6 @@ export default {
     },
 
     watch:{
-        idBtn(){
-            console.log(this.idBtn)
-        },
         data_item(newValue, oldValue){
             this.data.title = newValue.title;
             this.data.nominal = newValue.nominal;
@@ -126,6 +125,7 @@ export default {
                 const response = await this.addCash(item)
                 if(response.status){
                     this.toggleModal()
+                    this.$emit('update:ParentData')
                 }
             } catch (error) {
                 console.log(error)
