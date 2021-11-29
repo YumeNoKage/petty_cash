@@ -126,6 +126,12 @@ export default {
                 if(response.status){
                     this.toggleModal()
                     this.$emit('update:ParentData')
+                    this.data = {
+                        title: '',
+                        nominal: null,
+                        description: '',
+                        status: null,
+                    }
                 }
             } catch (error) {
                 console.log(error)
